@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-tasks"></i> Todo App</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total:</span>
+                    <span id="total-tasks" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Completed:</span>
+                    <span id="completed-tasks" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Pending:</span>
+                    <span id="pending-tasks" class="stat-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="sidebar">
+                <div class="card">
+                    <h3><i class="fas fa-plus"></i> Add New Task</h3>
+                    <form id="task-form">
+                        <div class="form-group">
+                            <input type="text" id="title" placeholder="Task title" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="description" placeholder="Description (optional)" rows="3"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category">Category:</label>
+                                <select id="category">
+                                    <option value="general">General</option>
+                                    <option value="work">Work</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="health">Health</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="priority">Priority:</label>
+                                <select id="priority">
+                                    <option value="1">High</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3" selected>Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Task
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-filter"></i> Filters</h3>
+                    <div class="filters">
+                        <button class="filter-btn active" data-filter="all">All Tasks</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+
+                    <div class="categories">
+                        <h4>Categories</h4>
+                        <div id="category-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="task-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search tasks...">
+                    </div>
+                    <button id="clear-search" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear Search
+                    </button>
+                </div>
+
+                <div class="tasks-container">
+                    <h2 id="tasks-title">All Tasks</h2>
+                    <div id="tasks-list" class="tasks-list">
+                        <!-- Tasks will be loaded here -->
+                    </div>
+                    <div id="no-tasks" class="no-tasks">
+                        <i class="fas fa-clipboard-list fa-3x"></i>
+                        <h3>No tasks yet</h3>
+                        <p>Add your first task using the form on the left!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Todo App &copy; 2024 | Built with FastAPI & SQLite</p>
+        </footer>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Task</h2>
+            <form id="edit-task-form">
+                <input type="hidden" id="edit-task-id">
+                <div class="form-group">
+                    <input type="text" id="edit-title" placeholder="Task title" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="edit-description" placeholder="Description" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-category">Category:</label>
+                        <select id="edit-category">
+                            <option value="general">General</option>
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="health">Health</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-priority">Priority:</label>
+                        <select id="edit-priority">
+                            <option value="1">High</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="edit-completed">
+                        <span>Completed</span>
+                    </label>
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
