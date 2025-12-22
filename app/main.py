@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, Depends, HTTPException, status, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -133,5 +135,5 @@ def get_stats(db: Session = Depends(get_db)):
 
 if __name__ == "__main__":
     import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 5000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
