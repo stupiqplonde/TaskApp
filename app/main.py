@@ -1,5 +1,4 @@
 import os
-
 from fastapi import FastAPI, Depends, HTTPException, status, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -19,14 +18,18 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Todo App", version="1.0.0")
 
 # Настройка статических файлов и шаблонов
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+static = os.path.join(BASE_DIR, 'static')
+templates = os.path.join(BASE_DIR, 'templates')
+temp_dir = Jinja2Templates(directory=templates)
+app.mount("/static", StaticFiles(directory=static), name="static")
+
 
 
 # Главная страница
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return temp_dir.TemplateResponse("index.html", {"request": request})
 
 
 # API эндпоинты
@@ -136,4 +139,4 @@ def get_stats(db: Session = Depends(get_db)):
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 5000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="localhost", port=port)
